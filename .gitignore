@@ -1,1 +1,6 @@
 "deploy.zip" 
+# Ignore the node_modules folder
+node_modules/
+
+# Ignore log files
+*.log
