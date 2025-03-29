@@ -1,10 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import ServiceProviderCard from '@/components/common/ServiceProviderCard';
 import { categories, serviceProviders } from '@/lib/data';
+import HeroSection from '@/components/HeroSection';
 
 export default function Home() {
   // Show only 4 featured providers
@@ -13,7 +14,7 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero section */}
-      <section className="relative bg-muted py-12 md:py-20">
+      {/* <section className="relative bg-muted py-12 md:py-20">
         <div className="container px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 xl:grid-cols-2">
             <div className="flex flex-col justify-center space-y-4">
@@ -52,7 +53,8 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
+      <HeroSection />
 
       {/* Categories section */}
       <section className="py-8 md:py-12">
@@ -73,8 +75,15 @@ export default function Home() {
           </div>
           <div className="mt-8 flex flex-wrap gap-2">
             {categories.map((category) => (
-              <Link key={category.id} href={`/marketplace?category=${category.id}`}>
-                <Button variant="outline" size="sm" className="flex items-center gap-1">
+              <Link
+                key={category.id}
+                href={`/marketplace?category=${category.id}`}
+              >
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex items-center gap-1"
+                >
                   {category.name}
                 </Button>
               </Link>
@@ -88,7 +97,9 @@ export default function Home() {
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <div>
-              <h2 className="text-2xl font-bold tracking-tight">Featured Service Providers</h2>
+              <h2 className="text-2xl font-bold tracking-tight">
+                Featured Service Providers
+              </h2>
               <p className="text-muted-foreground">
                 Top-rated professionals ready to help
               </p>
@@ -162,7 +173,9 @@ export default function Home() {
               Ready to get started?
             </h2>
             <p className="mt-2 text-muted-foreground max-w-2xl">
-              Find skilled professionals for your project today. Join thousands of satisfied customers who have found their perfect service provider match.
+              Find skilled professionals for your project today. Join thousands
+              of satisfied customers who have found their perfect service
+              provider match.
             </p>
             <div className="mt-6 flex flex-col gap-2 min-[400px]:flex-row">
               <Input
@@ -170,9 +183,7 @@ export default function Home() {
                 placeholder="Enter your email address"
                 className="w-full bg-background"
               />
-              <Button className="w-full min-[400px]:w-auto">
-                Get Started
-              </Button>
+              <Button className="w-full min-[400px]:w-auto">Get Started</Button>
             </div>
           </div>
         </div>
