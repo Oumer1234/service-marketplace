@@ -5,7 +5,10 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import ServiceProviderCard from '@/components/common/ServiceProviderCard';
 import { categories, serviceProviders } from '@/lib/data';
-import HeroSection from '@/components/HeroSection';
+import HeroSection from '@/components/Homepage/HeroSection';
+import CategoriesSection from '@/components/Homepage/CategoreiesSection';
+import HowItWorks from '@/components/Homepage/HowItWorks';
+import CTASection from '@/components/Homepage/CTASection';
 
 export default function Home() {
   // Show only 4 featured providers
@@ -13,7 +16,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Hero section */}
+      {/* Hero section */} 
       {/* <section className="relative bg-muted py-12 md:py-20">
         <div className="container px-4 md:px-6">
           <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 xl:grid-cols-2">
@@ -57,7 +60,7 @@ export default function Home() {
       <HeroSection />
 
       {/* Categories section */}
-      <section className="py-8 md:py-12">
+      {/* <section className="py-8 md:py-12">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <div>
@@ -90,7 +93,8 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
+      <CategoriesSection />
 
       {/* Featured service providers section */}
       <section className="py-8 md:py-12">
@@ -124,7 +128,7 @@ export default function Home() {
       </section>
 
       {/* How it works section */}
-      <section className="bg-muted py-8 md:py-12">
+      {/* <section className="bg-muted py-8 md:py-12">
         <div className="container px-4 md:px-6">
           <div className="text-center">
             <h2 className="text-2xl font-bold tracking-tight">How It Works</h2>
@@ -163,10 +167,11 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
+      <HowItWorks />
 
       {/* Call to action section */}
-      <section className="py-8 md:py-12">
+      {/* <section className="py-8 md:py-12">
         <div className="container px-4 md:px-6">
           <div className="rounded-lg bg-primary/10 p-6 md:p-8 flex flex-col items-center text-center">
             <h2 className="text-2xl font-bold tracking-tight">
@@ -187,7 +192,8 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
+      <CTASection />
     </div>
   );
 }
