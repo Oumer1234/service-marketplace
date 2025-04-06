@@ -57,6 +57,7 @@ export const serviceProviders: ServiceProvider[] = [
         duration: "1-3 hours",
       },
     ],
+    price: "40 $",
   },
   {
     id: "2",
@@ -101,6 +102,7 @@ export const serviceProviders: ServiceProvider[] = [
         duration: "4-5 hours",
       },
     ],
+    price: "20 $",
   },
   {
     id: "3",
@@ -115,7 +117,7 @@ export const serviceProviders: ServiceProvider[] = [
     description: "Certified roofer specializing in repairs and installations",
     serviceType: "Roofing",
     portfolioImages: [
-      "https://images.unsplash.com/photo-1632139368676-a0b3e4613e3f?w=500&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1603796846097-bee99e4a601f?w=500&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1622993006748-e0ab0bd1050a?w=500&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1626890631686-28c800069c2a?w=500&auto=format&fit=crop",
       "https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=500&auto=format&fit=crop",
@@ -145,6 +147,7 @@ export const serviceProviders: ServiceProvider[] = [
         duration: "2-3 days",
       },
     ],
+    price: "50 $ ",
   },
   {
     id: "4",
@@ -189,6 +192,7 @@ export const serviceProviders: ServiceProvider[] = [
         duration: "5-7 hours",
       },
     ],
+    price: "50 $ ",
   },
 ];
 

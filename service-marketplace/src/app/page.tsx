@@ -8,19 +8,23 @@ import { serviceProviders } from "@/lib/data";
 import HeroSection from "@/components/Homepage/HeroSection";
 import HowItWorks from "@/components/Homepage/HowItWorks";
 import CTASection from "@/components/Homepage/CTASection";
-import CategoriesSection from "@/components/Homepage/CategoriesSection";
 import AboutSection from "@/components/Homepage/AboutSection";
+import ServicesCarousel from "@/components/Homepage/ServicesCarousel";
+import TestimonialSection from "@/components/Homepage/TestimonialSection";
+import CategoriesSection from "@/components/Homepage/CategoriesSection";
 
 export default function Home() {
   // Show only 4 featured providers
   const featuredProviders = serviceProviders.slice(0, 4);
 
   return (
-    <div className="overflow-clip">
+    <div className="flex flex-col min-h-screen">
       <HeroSection />
       <AboutSection />
       {/* <CategoriesSection /> */}
-      <section className="py-8 md:py-12">
+      {/* <CategoriesSection /> */}
+      <ServicesCarousel />
+      {/* <section className="py-8 md:py-12">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
             <div>
@@ -41,9 +45,10 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
       <HowItWorks />
       <CTASection />
+      <TestimonialSection />
     </div>
   );
 }

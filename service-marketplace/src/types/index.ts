@@ -1,6 +1,7 @@
 export interface ServiceProvider {
   id: string;
   name: string;
+  price: string;
   profileImage: string;
   coverImage: string;
   location: string;
