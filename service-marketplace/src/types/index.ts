@@ -52,10 +52,10 @@ export interface Conversation {
 export interface Category {
   id: string;
   name: string;
-  icon: string;
+  icon: React.ComponentType<{ className?: string }>;
 }
 
-export type SortOption = 'rating' | 'price_low' | 'price_high' | 'most_reviews';
+export type SortOption = "rating" | "price_low" | "price_high" | "most_reviews";
 
 export interface FilterOptions {
   location?: string;
@@ -81,7 +81,7 @@ export interface User {
   updatedAt: string;
 }
 
-export type UserRole = 'user' | 'admin' | 'service_provider';
+export type UserRole = "user" | "admin" | "service_provider";
 
 export interface UserSession {
   id: string;
