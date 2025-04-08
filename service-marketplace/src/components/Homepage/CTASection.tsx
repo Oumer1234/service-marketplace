@@ -45,9 +45,8 @@ export default function CTASection() {
               viewport={{ once: false }}
               className="text-white/80 text-lg mb-10 max-w-3xl"
             >
-              Find skilled professionals for your project today. Join thousands
-              of satisfied customers who have found their perfect service
-              provider match. 🙌
+              Find skilled professionals for your project today. Join thousands of satisfied
+              customers who have found their perfect service provider match. 🙌
             </motion.p>
 
             {/* Buttons */}

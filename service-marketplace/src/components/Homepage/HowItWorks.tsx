@@ -2,13 +2,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import {
-  Search,
-  MessageSquare,
-  CheckCircle,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { Search, MessageSquare, CheckCircle, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
@@ -32,8 +26,7 @@ export default function HowItWorks() {
     {
       number: 1,
       title: "Search",
-      description:
-        "Browse categories or search for the specific service you need",
+      description: "Browse categories or search for the specific service you need",
       icon: Search,
       color: "from-emerald-500 to-green-600",
       bgColor: "bg-emerald-50 dark:bg-emerald-950/30",
@@ -51,8 +44,7 @@ export default function HowItWorks() {
     {
       number: 3,
       title: "Hire",
-      description:
-        "Book services with confidence knowing you've found the right pro",
+      description: "Book services with confidence knowing you've found the right pro",
       icon: CheckCircle,
       color: "from-emerald-500 to-teal-600",
       bgColor: "bg-emerald-50 dark:bg-emerald-950/30",
@@ -92,10 +84,7 @@ export default function HowItWorks() {
           </p>
         </motion.div>
 
-        <div
-          className="relative h-[500px] md:h-[320px] mb-8 p-8 "
-          ref={containerRef}
-        >
+        <div className="relative h-[500px] md:h-[320px] mb-8 p-8 " ref={containerRef}>
           <AnimatePresence initial={false}>
             {steps.map((step, index) => {
               // Calculate position based on active step
@@ -159,9 +148,7 @@ export default function HowItWorks() {
                     </div>
 
                     <h3 className="text-2xl font-bold mb-4">{step.title}</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-6">
-                      {step.description}
-                    </p>
+                    <p className="text-gray-600 dark:text-gray-400 mb-6">{step.description}</p>
 
                     {position === 0 && (
                       <motion.div

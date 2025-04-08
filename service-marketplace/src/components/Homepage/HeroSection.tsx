@@ -9,7 +9,7 @@ import Left from "@/assets/women.png";
 import Right from "@/assets/right.png";
 export default function Hero() {
   return (
-    <div className="min-h-screen bg-[#0B3B2D] pt-24 relative">
+    <div className="min-h-screen bg-[#21336e] pt-24 relative overflow-clip">
       <div className="absolute bottom-0 right-[10%] w-full h-full">
         <Image src={Left} alt="left Image" className=" h-full object-cover" />
       </div>
