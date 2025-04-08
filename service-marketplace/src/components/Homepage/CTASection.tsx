@@ -12,10 +12,10 @@ export default function CTASection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: false }}
-          className="relative w-full rounded-3xl bg-gradient-to-br from-emerald-800 via-green-900 to-black p-12 md:p-16 lg:p-20 text-center overflow-hidden"
+          className="relative w-full rounded-3xl bg-gradient-to-br from-indigo-800 via-blue-900 to-black p-12 md:p-16 lg:p-20 text-center overflow-hidden"
         >
-          <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 bg-emerald-500 blur-[120px] rounded-full"></div>
-          <div className="absolute bottom-0 right-1/4 w-1/3 h-1/3 bg-emerald-200/20 blur-[80px] rounded-full"></div>
+          <div className="absolute top-1/4 left-1/4 w-1/2 h-1/2 bg-indigo-500 blur-[120px] rounded-full"></div>
+          <div className="absolute bottom-0 right-1/4 w-1/3 h-1/3 bg-indigo-200/20 blur-[80px] rounded-full"></div>
 
           <div className="relative z-10 flex flex-col items-center">
             <motion.div

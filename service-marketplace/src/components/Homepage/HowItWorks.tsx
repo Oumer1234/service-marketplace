@@ -28,27 +28,27 @@ export default function HowItWorks() {
       title: "Search",
       description: "Browse categories or search for the specific service you need",
       icon: Search,
-      color: "from-emerald-500 to-green-600",
-      bgColor: "bg-emerald-50 dark:bg-emerald-950/30",
-      iconColor: "text-emerald-600 dark:text-emerald-400",
+      color: "from-sky-500 to-indigo-600",
+      bgColor: "bg-sky-50 dark:bg-sky-950/30",
+      iconColor: "text-sky-600 dark:text-sky-400",
     },
     {
       number: 2,
       title: "Connect",
       description: "Message providers directly to discuss your project needs",
       icon: MessageSquare,
-      color: "from-green-500 to-teal-900",
+      color: "from-indigo-500 to-teal-900",
       bgColor: "bg-teal-50 dark:bg-teal-950/50",
-      iconColor: "text-green-600 dark:text-green-400",
+      iconColor: "text-indigo-600 dark:text-indigo-400",
     },
     {
       number: 3,
       title: "Hire",
       description: "Book services with confidence knowing you've found the right pro",
       icon: CheckCircle,
-      color: "from-emerald-500 to-teal-600",
-      bgColor: "bg-emerald-50 dark:bg-emerald-950/30",
-      iconColor: "text-emerald-600 dark:text-emerald-400",
+      color: "from-sky-500 to-teal-600",
+      bgColor: "bg-sky-50 dark:bg-sky-950/30",
+      iconColor: "text-sky-600 dark:text-sky-400",
     },
   ];
 
@@ -187,7 +187,7 @@ export default function HowItWorks() {
                 key={step.number}
                 className={`h-3 w-3 rounded-full transition-all duration-300 ${
                   activeStep === index
-                    ? "bg-green-600 dark:bg-green-400 w-8"
+                    ? "bg-sky-600 dark:bg-sky-400 w-8"
                     : "bg-gray-300 dark:bg-gray-700"
                 }`}
                 onClick={() => setActiveStep(index)}

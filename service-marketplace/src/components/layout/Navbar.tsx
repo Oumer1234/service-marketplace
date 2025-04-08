@@ -50,7 +50,7 @@ export default function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-6">
             {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} className="hover:text-green-300 transition">
+              <Link key={link.href} href={link.href} className="hover:text-sky-300 transition">
                 {link.label}
               </Link>
             ))}
@@ -58,7 +58,7 @@ export default function Navbar() {
 
           <div className="flex items-center space-x-4">
             <Button
-              className="text-white rounded-full text-md bg-green-500/40 backdrop-blur-xl hidden md:block"
+              className="text-white rounded-full text-md bg-sky-500/80 hover:bg-sky-500/40 backdrop-blur-xl hidden md:block"
               size="lg"
             >
               Login / Register
@@ -89,7 +89,7 @@ export default function Navbar() {
                     <Link
                       key={link.href}
                       href={link.href}
-                      className="text-lg hover:text-green-300 transition"
+                      className="text-lg hover:text-sky-300 transition"
                       onClick={() => setIsOpen(false)}
                     >
                       {link.label}
@@ -97,7 +97,7 @@ export default function Navbar() {
                   ))}
                   <div className="pt-4">
                     <Button
-                      className="text-white rounded-full text-md bg-green-500/40 backdrop-blur-xl "
+                      className="text-white rounded-full text-md bg-sky-500/40 backdrop-blur-xl "
                       size="lg"
                     >
                       Login / Register
