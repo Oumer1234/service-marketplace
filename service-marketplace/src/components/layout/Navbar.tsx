@@ -7,12 +7,13 @@ import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [isMounted, setIsMounted] = useState(false);
   const { theme, setTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
-
+  const router = useRouter();
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -60,6 +61,7 @@ export default function Navbar() {
             <Button
               className="text-white rounded-full text-md bg-sky-500/80 hover:bg-sky-500/40 backdrop-blur-xl hidden md:block"
               size="lg"
+              onClick={() => router.push("/login")}
             >
               Login / Register
             </Button>
@@ -99,6 +101,7 @@ export default function Navbar() {
                     <Button
                       className="text-white rounded-full text-md bg-sky-500/40 backdrop-blur-xl "
                       size="lg"
+                      onClick={() => router.push("/login")}
                     >
                       Login / Register
                     </Button>
