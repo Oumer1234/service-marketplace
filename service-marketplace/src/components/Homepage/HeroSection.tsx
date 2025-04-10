@@ -9,7 +9,7 @@ import Left from "@/assets/women.png";
 import Right from "@/assets/right.png";
 export default function Hero() {
   return (
-    <div className="min-h-screen bg-[#0B3B2D] pt-24 relative">
+    <div className="min-h-screen bg-[#21336e] pt-24 relative overflow-clip">
       <div className="absolute bottom-0 right-[10%] w-full h-full">
         <Image src={Left} alt="left Image" className=" h-full object-cover" />
       </div>
@@ -29,7 +29,7 @@ export default function Hero() {
               <span>Excellent</span>
               {/* <div className="bg-white flex items-center justify-center gap-2 py-2 px-3"> */}
               {[1, 2, 3, 4, 5].map((star) => (
-                <Star key={star} className="w-5 h-5 text-green-400 fill-current" />
+                <Star key={star} className="w-5 h-5 text-blue-400 fill-current" />
               ))}
               {/* </div> */}
             </div>
@@ -65,10 +65,10 @@ export default function Hero() {
               <Input
                 type="text"
                 placeholder="Find the perfect service you need"
-                className="w-full pl-10 bg-[#10523e] border-[#0a3528] text-white placeholder:text-gray-400 py-6 px-12 rounded-full"
+                className="w-full pl-10 bg-sky-600 border-[#0a3528] text-white placeholder:text-gray-200 py-6 px-12 rounded-full"
               />
             </div>
-            <Button className="bg-[#4ade80] hover:bg-[#22c55e] text-[#0B3B2D] font-semibold py-6 px-6 rounded-full">
+            <Button className="bg-sky-600 hover:bg-sky-700 cursor-pointer text-white font-semibold py-6 px-6 rounded-full relative z-10">
               Search
             </Button>
           </motion.div>

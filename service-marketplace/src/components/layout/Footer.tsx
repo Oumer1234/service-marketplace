@@ -40,7 +40,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-gray-50 dark:bg-gray-900 pt-16 pb-8 ">
+    <footer className="bg-gray-200 dark:bg-gray-900 pt-16 pb-8 ">
       <div className="container mx-auto px-4">
         <div className="mb-12">
           <motion.div

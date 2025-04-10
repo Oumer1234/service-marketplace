@@ -120,11 +120,11 @@ const RatingStars = ({ rating }: { rating: number }) => {
   return (
     <div className="flex">
       {[...Array(fullStars)].map((_, i) => (
-        <Star key={i} className="w-5 h-5 fill-green-500 text-green-500" />
+        <Star key={i} className="w-5 h-5 fill-indigo-500 text-indigo-500" />
       ))}
-      {hasHalfStar && <StarHalf className="w-5 h-5 fill-green-500 text-green-500" />}
+      {hasHalfStar && <StarHalf className="w-5 h-5 fill-indigo-500 text-indigo-500" />}
       {[...Array(5 - fullStars - (hasHalfStar ? 1 : 0))].map((_, i) => (
-        <Star key={i + fullStars + (hasHalfStar ? 1 : 0)} className="w-5 h-5 text-green-500" />
+        <Star key={i + fullStars + (hasHalfStar ? 1 : 0)} className="w-5 h-5 text-indigo-500" />
       ))}
     </div>
   );
@@ -175,14 +175,14 @@ export default function TestimonialSection() {
           <div className="mr-3">
             <div className="text-sm font-medium">Excellent</div>
             <div className="flex">
-              <Star className="w-5 h-5 fill-green-500 text-green-500" />
-              <Star className="w-5 h-5 fill-green-500 text-green-500" />
-              <Star className="w-5 h-5 fill-green-500 text-green-500" />
-              <Star className="w-5 h-5 fill-green-500 text-green-500" />
-              <StarHalf className="w-5 h-5 fill-green-500 text-green-500" />
+              <Star className="w-5 h-5 fill-indigo-500 text-indigo-500" />
+              <Star className="w-5 h-5 fill-indigo-500 text-indigo-500" />
+              <Star className="w-5 h-5 fill-indigo-500 text-indigo-500" />
+              <Star className="w-5 h-5 fill-indigo-500 text-indigo-500" />
+              <StarHalf className="w-5 h-5 fill-indigo-500 text-indigo-500" />
             </div>
           </div>
-          <div className="text-green-600 font-medium flex items-center">
+          <div className="text-indigo-600 font-medium flex items-center">
             <span className="mr-1">Trustpilot</span>
           </div>
         </div>

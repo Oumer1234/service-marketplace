@@ -18,7 +18,7 @@ export default function Home() {
   const featuredProviders = serviceProviders.slice(0, 4);
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen ">
       <HeroSection />
       <AboutSection />
       {/* <CategoriesSection /> */}

@@ -2,13 +2,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import {
-  Search,
-  MessageSquare,
-  CheckCircle,
-  ChevronLeft,
-  ChevronRight,
-} from "lucide-react";
+import { Search, MessageSquare, CheckCircle, ChevronLeft, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 
@@ -32,31 +26,29 @@ export default function HowItWorks() {
     {
       number: 1,
       title: "Search",
-      description:
-        "Browse categories or search for the specific service you need",
+      description: "Browse categories or search for the specific service you need",
       icon: Search,
-      color: "from-emerald-500 to-green-600",
-      bgColor: "bg-emerald-50 dark:bg-emerald-950/30",
-      iconColor: "text-emerald-600 dark:text-emerald-400",
+      color: "from-sky-500 to-indigo-600",
+      bgColor: "bg-sky-50 dark:bg-sky-950/30",
+      iconColor: "text-sky-600 dark:text-sky-400",
     },
     {
       number: 2,
       title: "Connect",
       description: "Message providers directly to discuss your project needs",
       icon: MessageSquare,
-      color: "from-green-500 to-teal-900",
+      color: "from-indigo-500 to-teal-900",
       bgColor: "bg-teal-50 dark:bg-teal-950/50",
-      iconColor: "text-green-600 dark:text-green-400",
+      iconColor: "text-indigo-600 dark:text-indigo-400",
     },
     {
       number: 3,
       title: "Hire",
-      description:
-        "Book services with confidence knowing you've found the right pro",
+      description: "Book services with confidence knowing you've found the right pro",
       icon: CheckCircle,
-      color: "from-emerald-500 to-teal-600",
-      bgColor: "bg-emerald-50 dark:bg-emerald-950/30",
-      iconColor: "text-emerald-600 dark:text-emerald-400",
+      color: "from-sky-500 to-teal-600",
+      bgColor: "bg-sky-50 dark:bg-sky-950/30",
+      iconColor: "text-sky-600 dark:text-sky-400",
     },
   ];
 
@@ -92,10 +84,7 @@ export default function HowItWorks() {
           </p>
         </motion.div>
 
-        <div
-          className="relative h-[500px] md:h-[320px] mb-8 p-8 "
-          ref={containerRef}
-        >
+        <div className="relative h-[500px] md:h-[320px] mb-8 p-8 " ref={containerRef}>
           <AnimatePresence initial={false}>
             {steps.map((step, index) => {
               // Calculate position based on active step
@@ -159,9 +148,7 @@ export default function HowItWorks() {
                     </div>
 
                     <h3 className="text-2xl font-bold mb-4">{step.title}</h3>
-                    <p className="text-gray-600 dark:text-gray-400 mb-6">
-                      {step.description}
-                    </p>
+                    <p className="text-gray-600 dark:text-gray-400 mb-6">{step.description}</p>
 
                     {position === 0 && (
                       <motion.div
@@ -200,7 +187,7 @@ export default function HowItWorks() {
                 key={step.number}
                 className={`h-3 w-3 rounded-full transition-all duration-300 ${
                   activeStep === index
-                    ? "bg-green-600 dark:bg-green-400 w-8"
+                    ? "bg-sky-600 dark:bg-sky-400 w-8"
                     : "bg-gray-300 dark:bg-gray-700"
                 }`}
                 onClick={() => setActiveStep(index)}

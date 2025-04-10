@@ -117,7 +117,7 @@ function ServiceCard({ service }: { service: ServiceProvider }) {
             className="object-cover hover:scale-110 transition-all duration-300"
           />
         </div>
-        <div className="absolute bottom-0 left-0 right-0 z-10  bg-gradient-to-t from-gray-800 via-gray-600 to-transparent p-4">
+        <div className="absolute bottom-0 left-0 right-0 z-10  bg-gradient-to-t from-sky-800 via-gray-600 to-transparent p-4">
           <h3 className="text-xl font-semibold mb-2 text-white dark:text-gray-900">
             {service.name}
             <span className="text-sm font-medium ml-2 text-gray-300 dark:text-gray-800">
