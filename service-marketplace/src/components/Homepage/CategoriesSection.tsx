@@ -2,41 +2,10 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import {
-  ArrowRight,
-  ChevronRight,
-  Grid3X3,
-  Briefcase,
-  ShoppingBag,
-  Utensils,
-  Code,
-  Palette,
-  Camera,
-  Music,
-  BookOpen,
-  HeartPulse,
-  Home,
-  Truck,
-  Scissors,
-} from "lucide-react";
+import { ArrowRight, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-
-// Assuming this is your categories array structure
-const categories = [
-  { id: "business", name: "Business" , icon: Briefcase},
-  { id: "shopping", name: "Shopping" , icon: ShoppingBag},
-  { id: "food", name: "Food & Dining" ,icon : Utensils},
-  { id: "technology", name: "Technology" , icon: Code},
-  { id: "design", name: "Design" ,icon: Palette},
-  { id: "photography", name: "Photography" , icon: Camera},
-  { id: "music", name: "Music" ,icon:Music },
-  { id: "education", name: "Education" ,icon:BookOpen },
-  { id: "health", name: "Health & Wellness" ,icon:HeartPulse },
-  { id: "home", name: "Home Services" , icon:Home },
-  { id: "delivery", name: "Delivery" , icon:Truck}, 
-  { id: "beauty", name: "Beauty" , icon:Scissors },
-];
+import { categories } from "@/lib/data";
 
 export default function CategoriesSection() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -78,8 +47,7 @@ export default function CategoriesSection() {
               Explore Categories
             </h2>
             <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              Discover top-rated service providers across various categories
-              tailored to your needs
+              Discover top-rated service providers across various categories tailored to your needs
             </p>
           </motion.div>
         </div>
@@ -91,14 +59,11 @@ export default function CategoriesSection() {
           whileInView={isLoaded ? "show" : "hidden"}
         >
           {categories.map((category) => {
-            const IconComponent = category.icon
+            const IconComponent = category.icon;
 
             return (
               <motion.div key={category.id} variants={item}>
-                <Link
-                  href={`/marketplace?category=${category.id}`}
-                  className="block h-full"
-                >
+                <Link href={`/marketplace?category=${category.id}`} className="block h-full">
                   <div
                     className={`relative h-full group rounded-xl p-6 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 dark:border-gray-700 overflow-hidden 
                       hover:ring-2 hover:ring-indigo-500 hover:dark:ring-indigo-100"
