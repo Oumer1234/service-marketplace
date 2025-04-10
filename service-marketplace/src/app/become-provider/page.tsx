@@ -44,9 +44,10 @@ export default function BecomeProviderPage() {
   const router = useRouter();
   const { user } = useAuthStore();
   const [submitting, setSubmitting] = useState(false);
-  const descriptionRef = useRef<HTMLTextAreaElement>(null);
+
   const form = useForm<ServiceProviderFormData>({
     resolver: zodResolver(serviceProviderSchema),
+    shouldUnregister: false, // ✅ Prevents fields from unmounting
     defaultValues: {
       name: user?.name || "",
       location: "",
@@ -57,12 +58,21 @@ export default function BecomeProviderPage() {
     },
   });
 
+  const { isSubmitting } = form.formState; // ✅ Tracks submission state more efficiently
+
   // Update form when user data loads
   useEffect(() => {
     if (user) {
-      form.setValue("name", user.name);
+      form.reset({
+        name: user.name || "",
+        location: form.getValues("location"),
+        description: form.getValues("description"),
+        serviceType: form.getValues("serviceType"),
+        hourlyRate: form.getValues("hourlyRate"),
+        about: form.getValues("about"),
+      });
     }
-  }, [user, form]);
+  }, [user]);
 
   const onSubmit = async (data: ServiceProviderFormData) => {
     try {
@@ -231,7 +241,8 @@ export default function BecomeProviderPage() {
                           className="resize-none"
                           rows={2}
                           {...field}
-                          ref={descriptionRef}
+                          value={field.value ?? ""} // ✅ Ensures input remains controlled
+                          onChange={(e) => field.onChange(e.target.value)}
                         />
                       </FormControl>
                       <FormDescription>
@@ -300,7 +311,7 @@ export default function BecomeProviderPage() {
         redirectTo="/profile"
         checkFunction={() => user?.isServiceProvider !== true}
       >
-        <BecomeProviderContent />
+        <BecomeProviderContent key={user?.id || "new"} />
       </ProtectedRoute>
     </ProtectedRoute>
   );
