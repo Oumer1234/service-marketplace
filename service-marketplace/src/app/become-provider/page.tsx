@@ -71,9 +71,7 @@ export default function BecomeProviderPage() {
       // In a real app this would call an API
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      toast.success(
-        "Your service provider profile has been created. Welcome aboard!"
-      );
+      toast.success("Your service provider profile has been created. Welcome aboard!");
 
       // In a real app, we would get the new provider ID from the API response
       // and redirect to the provider profile page
@@ -87,12 +85,10 @@ export default function BecomeProviderPage() {
   };
 
   const BecomeProviderContent = () => (
-    <div className="container max-w-3xl py-10">
+    <div className="container max-w-3xl py-10 mt-10">
       <div className="space-y-6">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight">
-            Become a Service Provider
-          </h1>
+          <h1 className="text-2xl font-bold tracking-tight">Become a Service Provider</h1>
           <p className="text-muted-foreground">
             Join our platform and start offering your services to customers
           </p>
@@ -106,9 +102,8 @@ export default function BecomeProviderPage() {
             <div>
               <h3 className="font-semibold">Get Started in Minutes</h3>
               <p className="text-sm text-muted-foreground">
-                Fill out the form below to create your service provider profile.
-                Once approved, you can start adding services and receiving
-                bookings.
+                Fill out the form below to create your service provider profile. Once approved, you
+                can start adding services and receiving bookings.
               </p>
             </div>
           </div>
@@ -117,16 +112,11 @@ export default function BecomeProviderPage() {
         <Card>
           <CardHeader>
             <CardTitle>Service Provider Details</CardTitle>
-            <CardDescription>
-              Enter information about your services
-            </CardDescription>
+            <CardDescription>Enter information about your services</CardDescription>
           </CardHeader>
           <CardContent>
             <Form {...form}>
-              <form
-                onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-6"
-              >
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid gap-4 md:grid-cols-2">
                   <FormField
                     control={form.control}
@@ -154,9 +144,7 @@ export default function BecomeProviderPage() {
                         <FormControl>
                           <Input placeholder="City, State" {...field} />
                         </FormControl>
-                        <FormDescription>
-                          Enter the area where you provide services
-                        </FormDescription>
+                        <FormDescription>Enter the area where you provide services</FormDescription>
                         <FormMessage />
                       </FormItem>
                     )}
@@ -169,10 +157,7 @@ export default function BecomeProviderPage() {
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel>Service Category</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
                           <SelectTrigger>
                             <SelectValue placeholder="Select a category" />
@@ -205,14 +190,12 @@ export default function BecomeProviderPage() {
                           type="number"
                           min={1}
                           {...field}
-                          onChange={(e) =>
-                            field.onChange(Number(e.target.value))
-                          }
+                          onChange={(e) => field.onChange(Number(e.target.value))}
                         />
                       </FormControl>
                       <FormDescription>
-                        Your base hourly rate. You can create specific services
-                        with different pricing later.
+                        Your base hourly rate. You can create specific services with different
+                        pricing later.
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -235,8 +218,7 @@ export default function BecomeProviderPage() {
                         />
                       </FormControl>
                       <FormDescription>
-                        This will appear in search results and listings (max 150
-                        characters)
+                        This will appear in search results and listings (max 150 characters)
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -258,8 +240,7 @@ export default function BecomeProviderPage() {
                         />
                       </FormControl>
                       <FormDescription>
-                        Provide detailed information about your background and
-                        services
+                        Provide detailed information about your background and services
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -296,10 +277,7 @@ export default function BecomeProviderPage() {
 
   return (
     <ProtectedRoute redirectTo="/login">
-      <ProtectedRoute
-        redirectTo="/profile"
-        checkFunction={() => user?.isServiceProvider !== true}
-      >
+      <ProtectedRoute redirectTo="/profile" checkFunction={() => user?.isServiceProvider !== true}>
         <BecomeProviderContent />
       </ProtectedRoute>
     </ProtectedRoute>
