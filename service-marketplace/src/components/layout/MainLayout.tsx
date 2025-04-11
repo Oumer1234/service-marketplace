@@ -50,33 +50,11 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const handleLogout = () => {
-    logout();
-    toast.success("Logged out successfully");
-  };
-
   const navigationItems = [
     { name: "Home", href: "/", icon: <Home className="h-5 w-5" /> },
     { name: "Marketplace", href: "/marketplace", icon: <Grid3X3 className="h-5 w-5" /> },
     { name: "Messages", href: "/messages", icon: <MessageSquare className="h-5 w-5" /> },
   ];
-
-  const authNavigationItems = user
-    ? [
-        { name: "Profile", href: "/profile", icon: <User className="h-5 w-5" /> },
-        ...(user.isServiceProvider
-          ? [
-              {
-                name: "My Services",
-                href: `/service-provider/${user.serviceProviderId}`,
-                icon: <Grid3X3 className="h-5 w-5" />,
-              },
-            ]
-          : []),
-      ]
-    : [];
-
-  const allNavigationItems = [...navigationItems, ...authNavigationItems];
 
   return (
     <div className="flex min-h-screen flex-col bg-background">
@@ -248,7 +226,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
       <Navbar />
 
       {/* Main content */}
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 ">{children}</main>
 
       {/* Footer */}
       {/* <footer className="border-t bg-background py-6 md:py-8">

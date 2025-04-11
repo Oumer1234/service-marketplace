@@ -29,7 +29,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           <AuthProvider>
             <MainLayout>{children}</MainLayout>
-            <Toaster position="top-right" />
+            <Toaster position="top-center" />
           </AuthProvider>
         </ThemeProvider>
       </body>
