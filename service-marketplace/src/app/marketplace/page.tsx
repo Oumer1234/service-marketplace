@@ -1,12 +1,27 @@
+"use client";
 import Link from "next/link";
 import { Container, Grid2X2, List, SearchIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import ServiceProviderCard from "@/components/common/ServiceProviderCard";
 import { serviceProviders, categories } from "@/lib/data";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
 
+type sortByType = "Popularity" | "Price" | "Rate" | "Alphabet";
+
+type viewType = "grid" | "list";
 export default function MarketplacePage() {
+  const [sortBy, setSortBy] = useState<sortByType>("Popularity");
+  const [viewType, setViewType] = useState<viewType>("grid");
   console.log(serviceProviders);
+
+  const handleSortChange = (sort: sortByType) => {
+    setSortBy(sort);
+  };
+
+  const handleViewChange = (view: viewType) => {
+    setViewType(view);
+  };
 
   return (
     <div className="min-h-screen pb-12 mt-16">
@@ -16,8 +31,9 @@ export default function MarketplacePage() {
             Connect with Trusted Service Providers You'll Love{" "}
           </h1>
           <p className="text-muted-foreground text-lg max-w-4xl">
-            Discover reliable and skilled professionals tailored to your needs. Whether it's home
-            repairs, design work, or anything in between. we've got the right people for the job.{" "}
+            Discover reliable and skilled professionals tailored to your needs.
+            Whether it's home repairs, design work, or anything in between.
+            we've got the right people for the job.{" "}
           </p>
 
           <div className="mt-6 flex flex-wrap gap-2">
@@ -56,7 +72,11 @@ export default function MarketplacePage() {
             <div className="flex items-center gap-3">
               <h2 className="text-xl font-semibold">All Service Providers</h2>
               <div className="relative">
-                <Input type="text" placeholder="Search..." className="w-full pl-12" />
+                <Input
+                  type="text"
+                  placeholder="Search..."
+                  className="w-full pl-12"
+                />
                 <div className="absolute left-0 rounded-l-md top-1/2 transform -translate-y-1/2 bg-muted h-full p-3 pt-2">
                   <SearchIcon className=" size-5  " />
                 </div>
@@ -81,11 +101,19 @@ export default function MarketplacePage() {
                 </ul>
               </div>
               <div className="flex items-center gap-3 border rounded-md p-1 mt-4 sm:mt-0">
-                <Button variant="default" size="icon" className="border-none rounded-sm">
+                <Button
+                  variant="default"
+                  size="icon"
+                  className="border-none rounded-sm"
+                >
                   <Grid2X2 className="h-4 w-4" />
                   <span className="sr-only">Grid view</span>
                 </Button>
-                <Button variant="outline" size="icon" className="border-none rounded-sm">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="border-none rounded-sm"
+                >
                   <List className="h-4 w-4" />
                   <span className="sr-only">List view</span>
                 </Button>
@@ -95,7 +123,10 @@ export default function MarketplacePage() {
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {serviceProviders.map((provider) => (
-              <ServiceProviderCard key={provider.id} serviceProvider={provider} />
+              <ServiceProviderCard
+                key={provider.id}
+                serviceProvider={provider}
+              />
             ))}
           </div>
         </div>

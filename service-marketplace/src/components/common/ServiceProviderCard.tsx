@@ -5,7 +5,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+} from "@/components/ui/card";
 import { ServiceProvider } from "@/types";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
@@ -14,7 +20,10 @@ interface ServiceProviderCardProps {
   compact?: boolean;
 }
 
-const ServiceProviderCard = ({ serviceProvider, compact = false }: ServiceProviderCardProps) => {
+const ServiceProviderCard = ({
+  serviceProvider,
+  compact = false,
+}: ServiceProviderCardProps) => {
   return (
     <Card className="overflow-hidden transition-all hover:shadow-md">
       <Link href={`/service-provider/${serviceProvider.id}`}>
@@ -29,7 +38,7 @@ const ServiceProviderCard = ({ serviceProvider, compact = false }: ServiceProvid
             Start from {serviceProvider.hourlyRate}/hr
           </div>
           <div className="absolute top-4 right-4 z-20 bg-white dark:bg-gray-800 rounded-full px-3 py-1 text-sm font-medium shadow-sm">
-            {serviceProvider.location}/hr
+            {serviceProvider.location}
           </div>
         </div>
       </Link>
@@ -41,7 +50,10 @@ const ServiceProviderCard = ({ serviceProvider, compact = false }: ServiceProvid
               className="font-semibold hover:underline flex items-center gap-3 mb-3"
             >
               <Avatar className="h-8 w-8">
-                <AvatarImage src={serviceProvider.profileImage} alt={serviceProvider.name} />
+                <AvatarImage
+                  src={serviceProvider.profileImage}
+                  alt={serviceProvider.name}
+                />
                 <AvatarFallback>{serviceProvider.name[0]}</AvatarFallback>
               </Avatar>
               <div className="flex flex-col">
@@ -49,7 +61,9 @@ const ServiceProviderCard = ({ serviceProvider, compact = false }: ServiceProvid
                   {serviceProvider.name}
                   <span className="flex items-center gap-1">
                     <Star className="h-4 w-4 fill-primary text-primary" />
-                    <span className="text-sm font-medium">{serviceProvider.rating}</span>
+                    <span className="text-sm font-medium">
+                      {serviceProvider.rating}
+                    </span>
                     <span className="text-sm text-muted-foreground">
                       ({serviceProvider.reviewCount} reviews)
                     </span>
