@@ -1,13 +1,23 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Menu, Moon, Search, Sun, X } from "lucide-react";
+import { Grid3X3, LogOut, Menu, Moon, Search, Sun, User, X } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "../ui/sheet";
 import { useRouter } from "next/navigation";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useAuthStore } from "@/stores/authStore";
+import { toast } from "sonner";
 
 export default function Navbar() {
   const [isMounted, setIsMounted] = useState(false);
@@ -25,6 +35,12 @@ export default function Navbar() {
       setTheme("dark");
     }
   };
+  const { user, logout } = useAuthStore();
+
+  const handleLogout = () => {
+    logout();
+    toast.success("Logged out successfully");
+  };
 
   const navLinks = [
     { href: "/about", label: "About Us" },
@@ -33,6 +49,24 @@ export default function Navbar() {
     { href: "/blog", label: "Blog" },
     { href: "/marketplace", label: "Marketplace" },
   ];
+
+  const authNavigationItems = user
+    ? [
+        { name: "Profile", href: "/profile", icon: <User className="h-5 w-5" /> },
+        ...(user.isServiceProvider
+          ? [
+              {
+                name: "My Services",
+                href: `/service-provider/${user.serviceProviderId}`,
+                icon: <Grid3X3 className="h-5 w-5" />,
+                label: "My Services",
+              },
+            ]
+          : []),
+      ]
+    : [];
+
+  const allNavigationItems = [...navLinks, ...authNavigationItems];
 
   return (
     <motion.nav
@@ -50,7 +84,7 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-6">
-            {navLinks.map((link) => (
+            {allNavigationItems.map((link) => (
               <Link key={link.href} href={link.href} className="hover:text-sky-300 transition">
                 {link.label}
               </Link>
@@ -58,13 +92,59 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center space-x-4">
-            <Button
-              className="text-white rounded-full text-md bg-sky-500/80 hover:bg-sky-500/40 backdrop-blur-xl hidden md:block"
-              size="lg"
-              onClick={() => router.push("/login")}
-            >
-              Login / Register
-            </Button>
+            {user ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="rounded-full h-8 w-8 overflow-hidden"
+                  >
+                    <Avatar className="h-8 w-8">
+                      <AvatarImage src={user.profileImage} alt={user.name} />
+                      <AvatarFallback>
+                        {user.name
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")}
+                      </AvatarFallback>
+                    </Avatar>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <div className="flex items-center justify-start gap-2 p-2">
+                    <div className="flex flex-col space-y-1 leading-none">
+                      <p className="font-medium">{user.name}</p>
+                      <p className="text-muted-foreground w-[200px] truncate text-sm">
+                        {user.email}
+                      </p>
+                    </div>
+                  </div>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem asChild>
+                    <Link href="/profile">Profile</Link>
+                  </DropdownMenuItem>
+                  {user.isServiceProvider && (
+                    <DropdownMenuItem asChild>
+                      <Link href={`/service-provider/${user.serviceProviderId}`}>My Services</Link>
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onClick={handleLogout}>
+                    <LogOut className="mr-2 h-4 w-4" />
+                    <span>Log out</span>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : (
+              <Button
+                className="text-white rounded-full text-md bg-sky-500/80 hover:bg-sky-500/40 backdrop-blur-xl hidden md:block"
+                size="lg"
+                onClick={() => router.push("/login")}
+              >
+                Login / Register
+              </Button>
+            )}
 
             <Button variant="ghost" size="icon" onClick={toggleTheme} className="hidden md:flex">
               {isMounted && theme === "dark" ? (
@@ -98,13 +178,62 @@ export default function Navbar() {
                     </Link>
                   ))}
                   <div className="pt-4">
-                    <Button
-                      className="text-white rounded-full text-md bg-sky-500/40 backdrop-blur-xl "
-                      size="lg"
-                      onClick={() => router.push("/login")}
-                    >
-                      Login / Register
-                    </Button>
+                    {user ? (
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="rounded-full h-8 w-8 overflow-hidden"
+                          >
+                            <Avatar className="h-8 w-8">
+                              <AvatarImage src={user.profileImage} alt={user.name} />
+                              <AvatarFallback>
+                                {user.name
+                                  .split(" ")
+                                  .map((n) => n[0])
+                                  .join("")}
+                              </AvatarFallback>
+                            </Avatar>
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <div className="flex items-center justify-start gap-2 p-2">
+                            <div className="flex flex-col space-y-1 leading-none">
+                              <p className="font-medium">{user.name}</p>
+                              <p className="text-muted-foreground w-[200px] truncate text-sm">
+                                {user.email}
+                              </p>
+                            </div>
+                          </div>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem asChild>
+                            <Link href="/profile">Profile</Link>
+                          </DropdownMenuItem>
+                          {user.isServiceProvider && (
+                            <DropdownMenuItem asChild>
+                              <Link href={`/service-provider/${user.serviceProviderId}`}>
+                                My Services
+                              </Link>
+                            </DropdownMenuItem>
+                          )}
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem onClick={handleLogout}>
+                            <LogOut className="mr-2 h-4 w-4" />
+                            <span>Log out</span>
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    ) : (
+                      <Button
+                        className="text-white rounded-full text-md bg-sky-500/40 backdrop-blur-xl "
+                        size="lg"
+                        onClick={() => router.push("/login")}
+                      >
+                        Login / Register
+                      </Button>
+                    )}
+
                     <Button
                       variant="ghost"
                       size="icon"

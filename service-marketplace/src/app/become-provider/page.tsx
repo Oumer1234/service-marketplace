@@ -97,7 +97,7 @@ export default function BecomeProviderPage() {
   };
 
   const BecomeProviderContent = () => (
-    <div className="container max-w-3xl py-10">
+    <div className="container max-w-3xl py-10 mt-10">
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">
@@ -311,7 +311,7 @@ export default function BecomeProviderPage() {
         redirectTo="/profile"
         checkFunction={() => user?.isServiceProvider !== true}
       >
-        <BecomeProviderContent key={user?.id || "new"} />
+        <BecomeProviderContent />
       </ProtectedRoute>
     </ProtectedRoute>
   );
