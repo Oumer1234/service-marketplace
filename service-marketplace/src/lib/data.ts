@@ -12,8 +12,8 @@ export const categories: Category[] = [
   { id: "7", name: "Painting", icon: PaintBucket },
   { id: "8", name: "Carpentry", icon: Hammer },
 ];
-
-export const serviceProviders: ServiceProvider[] = [
+// : ServiceProvider[]
+export const serviceProviders = [
   {
     id: "1",
     name: "John Smith",

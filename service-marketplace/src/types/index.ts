@@ -1,5 +1,6 @@
 export interface ServiceProvider {
   id: string;
+  userId: string;
   name: string;
   price: string;
   profileImage: string;
@@ -73,7 +74,7 @@ export interface User {
   id: string;
   email: string;
   name: string;
-  password?: string; // Only stored hashed, not returned to client
+  password?: string;
   profileImage?: string;
   role: UserRole;
   isServiceProvider: boolean;
