@@ -12,7 +12,9 @@ export const categories: Category[] = [
   { id: "7", name: "Painting", icon: PaintBucket },
   { id: "8", name: "Carpentry", icon: Hammer },
 ];
+
 // : ServiceProvider[]
+
 export const serviceProviders = [
   {
     id: "1",
