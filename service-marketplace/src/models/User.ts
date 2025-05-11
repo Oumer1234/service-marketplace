@@ -39,6 +39,11 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    provider: {
+      type: String,
+      enum: ["email", "google", "apple"],
+      default: "email",
+    },
   },
   {
     timestamps: true,
