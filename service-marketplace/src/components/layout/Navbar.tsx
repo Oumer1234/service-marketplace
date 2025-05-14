@@ -18,12 +18,25 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useAuthStore } from "@/stores/authStore";
 import { toast } from "sonner";
+import { NavUser } from "./NavUser";
+import { getUserSession } from "@/lib/users";
+import { useSession } from "@/hooks/use-session";
+import { SignOut } from "../auth/sign-out";
 
 export default function Navbar() {
   const [isMounted, setIsMounted] = useState(false);
   const { theme, setTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const { data: session, isPending } = useSession();
+  const [user, setUser] = useState<typeof User | null>(null);
+
+  console.log("session : ", session);
+
+  // useEffect(() => {
+  //   if (session) setUser(session?.user);
+  // }, [session, isPending]);
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
@@ -35,12 +48,6 @@ export default function Navbar() {
       setTheme("dark");
     }
   };
-  const { user, logout } = useAuthStore();
-
-  const handleLogout = () => {
-    logout();
-    toast.success("Logged out successfully");
-  };
 
   const navLinks = [
     { href: "/about", label: "About Us" },
@@ -50,23 +57,23 @@ export default function Navbar() {
     { href: "/marketplace", label: "Marketplace" },
   ];
 
-  const authNavigationItems = user
-    ? [
-        { name: "Profile", href: "/profile", icon: <User className="h-5 w-5" /> },
-        ...(user.isServiceProvider
-          ? [
-              {
-                name: "My Services",
-                href: `/service-provider/${user.serviceProviderId}`,
-                icon: <Grid3X3 className="h-5 w-5" />,
-                label: "My Services",
-              },
-            ]
-          : []),
-      ]
-    : [];
+  // const authNavigationItems = user
+  //   ? [
+  //       { name: "Profile", href: "/profile", icon: <User className="h-5 w-5" /> },
+  //       ...(session?.user.isServiceProvider
+  //         ? [
+  //             {
+  //               name: "My Services",
+  //               href: `/service-provider/${session?.user.serviceProviderId}`,
+  //               icon: <Grid3X3 className="h-5 w-5" />,
+  //               label: "My Services",
+  //             },
+  //           ]
+  //         : []),
+  //     ]
+  //   : [];
 
-  const allNavigationItems = [...navLinks, ...authNavigationItems];
+  // const allNavigationItems = [...navLinks, ...authNavigationItems];
 
   return (
     <motion.nav
@@ -84,7 +91,7 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-6">
-            {allNavigationItems.map((link) => (
+            {navLinks.map((link) => (
               <Link key={link.href} href={link.href} className="hover:text-sky-300 transition">
                 {link.label}
               </Link>
@@ -92,50 +99,9 @@ export default function Navbar() {
           </div>
 
           <div className="flex items-center space-x-4">
-            {user ? (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="rounded-full h-8 w-8 overflow-hidden"
-                  >
-                    <Avatar className="h-8 w-8">
-                      <AvatarImage src={user.profileImage} alt={user.name} />
-                      <AvatarFallback>
-                        {user.name
-                          .split(" ")
-                          .map((n) => n[0])
-                          .join("")}
-                      </AvatarFallback>
-                    </Avatar>
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <div className="flex items-center justify-start gap-2 p-2">
-                    <div className="flex flex-col space-y-1 leading-none">
-                      <p className="font-medium">{user.name}</p>
-                      <p className="text-muted-foreground w-[200px] truncate text-sm">
-                        {user.email}
-                      </p>
-                    </div>
-                  </div>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem asChild>
-                    <Link href="/profile">Profile</Link>
-                  </DropdownMenuItem>
-                  {user.isServiceProvider && (
-                    <DropdownMenuItem asChild>
-                      <Link href={`/service-provider/${user.serviceProviderId}`}>My Services</Link>
-                    </DropdownMenuItem>
-                  )}
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={handleLogout}>
-                    <LogOut className="mr-2 h-4 w-4" />
-                    <span>Log out</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
+            {session ? (
+              // <NavUser user={session.user} />
+              <SignOut />
             ) : (
               <Button
                 className="text-white rounded-full text-md bg-sky-500/80 hover:bg-sky-500/40 backdrop-blur-xl hidden md:block"
@@ -178,52 +144,8 @@ export default function Navbar() {
                     </Link>
                   ))}
                   <div className="pt-4">
-                    {user ? (
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            className="rounded-full h-8 w-8 overflow-hidden"
-                          >
-                            <Avatar className="h-8 w-8">
-                              <AvatarImage src={user.profileImage} alt={user.name} />
-                              <AvatarFallback>
-                                {user.name
-                                  .split(" ")
-                                  .map((n) => n[0])
-                                  .join("")}
-                              </AvatarFallback>
-                            </Avatar>
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                          <div className="flex items-center justify-start gap-2 p-2">
-                            <div className="flex flex-col space-y-1 leading-none">
-                              <p className="font-medium">{user.name}</p>
-                              <p className="text-muted-foreground w-[200px] truncate text-sm">
-                                {user.email}
-                              </p>
-                            </div>
-                          </div>
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem asChild>
-                            <Link href="/profile">Profile</Link>
-                          </DropdownMenuItem>
-                          {user.isServiceProvider && (
-                            <DropdownMenuItem asChild>
-                              <Link href={`/service-provider/${user.serviceProviderId}`}>
-                                My Services
-                              </Link>
-                            </DropdownMenuItem>
-                          )}
-                          <DropdownMenuSeparator />
-                          <DropdownMenuItem onClick={handleLogout}>
-                            <LogOut className="mr-2 h-4 w-4" />
-                            <span>Log out</span>
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
+                    {session ? (
+                      <SignOut />
                     ) : (
                       <Button
                         className="text-white rounded-full text-md bg-sky-500/40 backdrop-blur-xl "

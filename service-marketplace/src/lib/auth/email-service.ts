@@ -11,7 +11,8 @@ interface SendEmailProps {
 export async function sendEmail({ to, subject, html }: SendEmailProps) {
   try {
     const { data, error } = await resend.emails.send({
-      from: "Service Inc <onboarding@serviceInc>",
+      from: "Acme <onboarding@resend.dev>",
+      // Name <email@example.com>
       to: [to],
       subject,
       html,
