@@ -1,7 +1,7 @@
-import { create } from 'zustand';
-import { UserSession, AuthState, LoginFormData, RegisterFormData } from '@/types';
-import { findUserByEmail, validatePassword, getUserSession } from '@/lib/users';
-import { nanoid } from 'nanoid';
+import { create } from "zustand";
+import { UserSession, AuthState, LoginFormData, RegisterFormData } from "@/types";
+import { findUserByEmail, validatePassword, getUserSession } from "@/lib/users";
+import { nanoid } from "nanoid";
 
 interface AuthStore extends AuthState {
   login: (data: LoginFormData) => Promise<UserSession | null>;
@@ -19,25 +19,22 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     try {
       set({ isLoading: true, error: null });
 
-      // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 500));
-
       // Find user by email
       const user = findUserByEmail(data.email);
       if (!user) {
-        throw new Error('Invalid email or password');
+        throw new Error("Invalid email or password");
       }
 
       // Validate password
-      if (!validatePassword(data.password, user.password || '')) {
-        throw new Error('Invalid email or password');
+      if (!validatePassword(data.password, user.password || "")) {
+        throw new Error("Invalid email or password");
       }
 
       // Create user session
       const userSession = getUserSession(user);
 
       // Store in localStorage (in a real app, this would be managed by next-auth or a JWT)
-      localStorage.setItem('userSession', JSON.stringify(userSession));
+      localStorage.setItem("userSession", JSON.stringify(userSession));
 
       set({ user: userSession, isLoading: false });
       return userSession;
@@ -52,16 +49,16 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       set({ isLoading: true, error: null });
 
       // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 500));
+      await new Promise((resolve) => setTimeout(resolve, 500));
 
       // Validate passwords match
       if (data.password !== data.confirmPassword) {
-        throw new Error('Passwords do not match');
+        throw new Error("Passwords do not match");
       }
 
       // Check if email already exists
       if (findUserByEmail(data.email)) {
-        throw new Error('Email already in use');
+        throw new Error("Email already in use");
       }
 
       // In a real app, this would save to a database
@@ -70,15 +67,15 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
         id: nanoid(),
         email: data.email,
         name: data.name,
-        role: 'user' as const,
+        role: "user" as const,
         isServiceProvider: false,
         profileImage: `https://i.pravatar.cc/150?img=${Math.floor(Math.random() * 70)}`,
         createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toISOString(),
       };
 
       // Store in localStorage (in a real app, this would be managed by next-auth or a JWT)
-      localStorage.setItem('userSession', JSON.stringify(newUser));
+      localStorage.setItem("userSession", JSON.stringify(newUser));
 
       set({ user: newUser, isLoading: false });
       return newUser;
@@ -89,7 +86,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
   },
 
   logout: () => {
-    localStorage.removeItem('userSession');
+    localStorage.removeItem("userSession");
     set({ user: null });
   },
 
@@ -98,10 +95,10 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       set({ isLoading: true });
 
       // Simulate API delay
-      await new Promise(resolve => setTimeout(resolve, 200));
+      await new Promise((resolve) => setTimeout(resolve, 200));
 
       // Check localStorage for existing session
-      const storedSession = localStorage.getItem('userSession');
+      const storedSession = localStorage.getItem("userSession");
       if (!storedSession) {
         set({ isLoading: false });
         return null;
@@ -114,5 +111,5 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       set({ error: (error as Error).message, isLoading: false });
       return null;
     }
-  }
+  },
 }));

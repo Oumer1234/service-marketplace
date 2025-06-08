@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
-import Link from 'next/link';
-import { Eye, EyeOff, Camera, Loader2, ArrowRight } from 'lucide-react';
-import ProtectedRoute from '@/components/ProtectedRoute';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { Eye, EyeOff, Camera, Loader2, ArrowRight } from "lucide-react";
+import ProtectedRoute from "@/components/ProtectedRoute";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   Form,
   FormControl,
@@ -16,39 +16,52 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  FormDescription
-} from '@/components/ui/form';
-import { Separator } from '@/components/ui/separator';
+  FormDescription,
+} from "@/components/ui/form";
+import { Separator } from "@/components/ui/separator";
 import {
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle
-} from '@/components/ui/card';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { profileUpdateSchema } from '@/lib/formValidation';
-import { ProfileFormData } from '@/types';
-import { useAuthStore } from '@/stores/authStore';
-import { toast } from 'sonner';
+  CardTitle,
+} from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { profileUpdateSchema } from "@/lib/formValidation";
+import { ProfileFormData } from "@/types";
+import { useSession } from "@/hooks/use-session";
+import { toast } from "sonner";
+
+interface user {
+  id: string;
+  name: string;
+  email: string;
+  emailVerified: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  image?: string | null;
+  role?: string;
+  isServiceProvider: boolean;
+}
 
 export default function ProfilePage() {
   const router = useRouter();
-  const { user } = useAuthStore();
+  const { data, isPending } = useSession();
+  const user = data?.user;
+  const [profileData, setProfileData] = useState(null);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [updatingProfile, setUpdatingProfile] = useState(false);
-
   const form = useForm<ProfileFormData>({
     resolver: zodResolver(profileUpdateSchema),
     defaultValues: {
-      name: user?.name || '',
-      email: user?.email || '',
-      currentPassword: '',
-      newPassword: '',
-      confirmNewPassword: '',
+      name: user?.name || "",
+      email: user?.email || "",
+      currentPassword: "",
+      newPassword: "",
+      confirmNewPassword: "",
     },
   });
 
@@ -56,24 +69,30 @@ export default function ProfilePage() {
     try {
       setUpdatingProfile(true);
       // In a real app this would call an API
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
-      toast.success('Profile updated successfully');
+      toast.success("Profile updated successfully");
       setUpdatingProfile(false);
     } catch (error) {
-      toast.error('Failed to update profile');
+      toast.error("Failed to update profile");
       setUpdatingProfile(false);
     }
   };
 
+  if (isPending) {
+    return (
+      <div className="flex min-h-screen items-center justify-center">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
   const ProfileContent = () => (
-    <div className="container max-w-4xl py-10">
+    <div className="container max-w-5xl py-24">
       <div className="space-y-6">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Profile</h1>
-          <p className="text-muted-foreground">
-            Manage your account settings and profile
-          </p>
+          <p className="text-muted-foreground">Manage your account settings and profile</p>
         </div>
 
         <Separator />
@@ -82,9 +101,12 @@ export default function ProfilePage() {
           <div className="flex flex-col items-center space-y-4 sm:flex-row sm:space-x-6 sm:space-y-0">
             <div className="relative">
               <Avatar className="h-24 w-24">
-                <AvatarImage src={user?.profileImage} alt={user?.name || ''} />
+                <AvatarImage src={user?.image || " "} alt={user?.name || ""} />
                 <AvatarFallback>
-                  {user?.name.split(' ').map(n => n[0]).join('') || ''}
+                  {user?.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("") || ""}
                 </AvatarFallback>
               </Avatar>
 
@@ -102,11 +124,11 @@ export default function ProfilePage() {
               <h2 className="text-xl font-semibold">{user?.name}</h2>
               <p className="text-sm text-muted-foreground">{user?.email}</p>
               <p className="text-xs uppercase tracking-wide">
-                {user?.role === 'admin'
-                  ? 'Administrator'
-                  : user?.role === 'service_provider'
-                    ? 'Service Provider'
-                    : 'User'}
+                {user?.role === "admin"
+                  ? "Administrator"
+                  : user?.role === "service_provider"
+                    ? "Service Provider"
+                    : "User"}
               </p>
             </div>
           </div>
@@ -133,9 +155,7 @@ export default function ProfilePage() {
           <Card>
             <CardHeader>
               <CardTitle>Account Information</CardTitle>
-              <CardDescription>
-                Update your account details and password
-              </CardDescription>
+              <CardDescription>Update your account details and password</CardDescription>
             </CardHeader>
             <CardContent>
               <Form {...form}>
@@ -164,9 +184,7 @@ export default function ProfilePage() {
                           <FormControl>
                             <Input {...field} type="email" disabled />
                           </FormControl>
-                          <FormDescription>
-                            Your email cannot be changed
-                          </FormDescription>
+                          <FormDescription>Your email cannot be changed</FormDescription>
                           <FormMessage />
                         </FormItem>
                       )}
@@ -192,7 +210,7 @@ export default function ProfilePage() {
                           <FormControl>
                             <div className="relative">
                               <Input
-                                type={showCurrentPassword ? 'text' : 'password'}
+                                type={showCurrentPassword ? "text" : "password"}
                                 placeholder="Enter your current password"
                                 {...field}
                               />
@@ -209,7 +227,7 @@ export default function ProfilePage() {
                                   <Eye className="h-4 w-4" />
                                 )}
                                 <span className="sr-only">
-                                  {showCurrentPassword ? 'Hide password' : 'Show password'}
+                                  {showCurrentPassword ? "Hide password" : "Show password"}
                                 </span>
                               </Button>
                             </div>
@@ -228,7 +246,7 @@ export default function ProfilePage() {
                           <FormControl>
                             <div className="relative">
                               <Input
-                                type={showNewPassword ? 'text' : 'password'}
+                                type={showNewPassword ? "text" : "password"}
                                 placeholder="Enter your new password"
                                 {...field}
                               />
@@ -245,13 +263,14 @@ export default function ProfilePage() {
                                   <Eye className="h-4 w-4" />
                                 )}
                                 <span className="sr-only">
-                                  {showNewPassword ? 'Hide password' : 'Show password'}
+                                  {showNewPassword ? "Hide password" : "Show password"}
                                 </span>
                               </Button>
                             </div>
                           </FormControl>
                           <FormDescription>
-                            Password must be at least 8 characters and include uppercase, lowercase and numbers
+                            Password must be at least 8 characters and include uppercase, lowercase
+                            and numbers
                           </FormDescription>
                           <FormMessage />
                         </FormItem>
@@ -267,7 +286,7 @@ export default function ProfilePage() {
                           <FormControl>
                             <div className="relative">
                               <Input
-                                type={showConfirmPassword ? 'text' : 'password'}
+                                type={showConfirmPassword ? "text" : "password"}
                                 placeholder="Confirm your new password"
                                 {...field}
                               />
@@ -284,7 +303,7 @@ export default function ProfilePage() {
                                   <Eye className="h-4 w-4" />
                                 )}
                                 <span className="sr-only">
-                                  {showConfirmPassword ? 'Hide password' : 'Show password'}
+                                  {showConfirmPassword ? "Hide password" : "Show password"}
                                 </span>
                               </Button>
                             </div>
@@ -303,7 +322,7 @@ export default function ProfilePage() {
                           Updating...
                         </>
                       ) : (
-                        'Save Changes'
+                        "Save Changes"
                       )}
                     </Button>
                   </div>
@@ -316,21 +335,17 @@ export default function ProfilePage() {
             <Card>
               <CardHeader>
                 <CardTitle>Become a Service Provider</CardTitle>
-                <CardDescription>
-                  Start offering your services on our platform
-                </CardDescription>
+                <CardDescription>Start offering your services on our platform</CardDescription>
               </CardHeader>
               <CardContent>
                 <p className="text-sm text-muted-foreground">
-                  As a service provider, you can list your services, receive bookings,
-                  and earn money by helping others with your skills.
+                  As a service provider, you can list your services, receive bookings, and earn
+                  money by helping others with your skills.
                 </p>
               </CardContent>
               <CardFooter>
                 <Link href="/become-provider">
-                  <Button>
-                    Become a Service Provider
-                  </Button>
+                  <Button>Become a Service Provider</Button>
                 </Link>
               </CardFooter>
             </Card>

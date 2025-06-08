@@ -57,6 +57,15 @@ export const auth = betterAuth({
         defaultValue: "user",
         enum: ["user", "admin", "service_provider"],
       },
+      isServiceProvider: {
+        type: "boolean",
+        required: false,
+        defaultValue: false,
+      },
+      serviceProviderId: {
+        type: "number",
+        required: false,
+      },
     },
     update: {
       before: async (session: Record<string, unknown>) => {
