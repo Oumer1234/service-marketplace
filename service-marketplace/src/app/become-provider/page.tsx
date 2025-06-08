@@ -265,7 +265,7 @@ export default function BecomeProviderPage() {
                         onChange={(e) => handleImageUpload(e, "cover")}
                       />
                       {coverImagePreview && (
-                        <div className="relative w-64 h-64">
+                        <div className="relative w-full h-72">
                           <Image
                             src={coverImagePreview}
                             alt="Cover preview"
