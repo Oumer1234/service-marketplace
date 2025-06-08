@@ -244,7 +244,7 @@ export default function ProfilePage() {
                     You have a service provider account
                   </p>
                 </div>
-                <Link href={`/service-provider/${user.serviceProviderId}`}>
+                <Link href={`/service-provider/${user.id}`}>
                   <Button size="sm" variant="outline" className="gap-1">
                     Manage services
                     <ArrowRight className="h-4 w-4" />
