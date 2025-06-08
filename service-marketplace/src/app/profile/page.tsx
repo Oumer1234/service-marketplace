@@ -158,6 +158,7 @@ export default function ProfilePage() {
 
       const result = await response.json();
       toast.success(result.message || "Profile image updated successfully");
+
       router.refresh();
     } catch (error) {
       toast.error(error instanceof Error ? error.message : "Failed to upload image");
