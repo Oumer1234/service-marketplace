@@ -1,26 +1,27 @@
 import mongoose from "mongoose";
 
-type dbCache = {
+type MongooseCache = {
   conn: typeof mongoose | null;
   promise: Promise<typeof mongoose> | null;
 };
 
-const mongoGlobal = global as typeof globalThis & {
-  mongoose: dbCache;
+const globalWithMongoose = global as typeof globalThis & {
+  mongoose: MongooseCache;
 };
 
 const MONGODB_URI = process.env.DATABASE_URL as string;
 
 if (!MONGODB_URI) {
-  throw new Error("Please define the DATABASE_URL environment variable");
+  throw new Error("Please define the MONGODB_URI environment variable");
 }
 
-const cached = mongoGlobal.mongoose ?? { conn: null, promise: null };
-mongoGlobal.mongoose = cached;
+const cached = globalWithMongoose.mongoose ?? { conn: null, promise: null };
+globalWithMongoose.mongoose = cached;
 async function dbConnect(): Promise<typeof mongoose> {
   if (cached.conn) {
     return cached.conn;
   }
+
   if (!cached.promise) {
     const opts = {
       bufferCommands: false,
@@ -40,6 +41,5 @@ async function dbConnect(): Promise<typeof mongoose> {
 
   return cached.conn;
 }
-const conn = await dbConnect();
-const db = conn.connection.db;
-export { db };
+
+export default dbConnect;

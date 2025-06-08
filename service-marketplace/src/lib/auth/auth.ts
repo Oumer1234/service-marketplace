@@ -2,13 +2,17 @@ import { betterAuth } from "better-auth";
 import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { admin, magicLink } from "better-auth/plugins";
 import { sendEmail } from "./email-service";
-import { db } from "../db";
+import dbConnect from "../db";
 import { nextCookies } from "better-auth/next-js";
 import {
   emailVerificationTemplate,
   magicLinkTemplate,
   passwordResetTemplate,
 } from "./templates/templates";
+import mongoose from "mongoose";
+
+await dbConnect();
+const db = mongoose.connection.db;
 
 if (!db) {
   throw new Error("Database connection is not established.");
