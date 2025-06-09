@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import { ObjectId } from "mongodb";
 import dbConnect from "@/lib/db";
-import ServiceProvider from "@/models/ServiceProvider";
 import Review from "@/models/Review";
+import "@/models/User";
+import ServiceProvider from "@/models/ServiceProvider";
 
 export async function GET(request: Request, { params }: { params: { id: string } }) {
   try {
@@ -15,7 +16,7 @@ export async function GET(request: Request, { params }: { params: { id: string }
       return NextResponse.json({ error: "Invalid service provider ID" }, { status: 400 });
     }
 
-    console.log(id);
+    console.log("service provider id : ", id);
 
     // Find the service provider
     const serviceProvider = await ServiceProvider.findOne({ user: id }).populate({
