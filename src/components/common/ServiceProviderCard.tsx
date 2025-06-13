@@ -5,28 +5,26 @@ import Image from "next/image";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader } from "@/components/ui/card";
 import { ServiceProvider } from "@/types";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useRouter } from "next/navigation";
 
 interface ServiceProviderCardProps {
   serviceProvider: ServiceProvider;
   compact?: boolean;
 }
 
-const ServiceProviderCard = ({
-  serviceProvider,
-  compact = false,
-}: ServiceProviderCardProps) => {
+const ServiceProviderCard = ({ serviceProvider, compact = false }: ServiceProviderCardProps) => {
+  const router = useRouter();
+
+  const handleHireNow = () => {
+    router.push(`/service-provider/${serviceProvider.userId}`);
+  };
+
   return (
     <Card className="overflow-hidden transition-all hover:shadow-md">
-      <Link href={`/service-provider/${serviceProvider.id}`}>
+      <Link href={`/service-provider/${serviceProvider.userId}`}>
         <div className="relative h-52 w-full overflow-hidden">
           <Image
             src={serviceProvider.portfolioImages[0]}
@@ -46,14 +44,11 @@ const ServiceProviderCard = ({
         <div className="flex items-start justify-between">
           <div>
             <Link
-              href={`/service-provider/${serviceProvider.id}`}
+              href={`/service-provider/${serviceProvider.userId}`}
               className="font-semibold hover:underline flex items-center gap-3 mb-3"
             >
               <Avatar className="h-8 w-8">
-                <AvatarImage
-                  src={serviceProvider.profileImage}
-                  alt={serviceProvider.name}
-                />
+                <AvatarImage src={serviceProvider.profileImage} alt={serviceProvider.name} />
                 <AvatarFallback>{serviceProvider.name[0]}</AvatarFallback>
               </Avatar>
               <div className="flex flex-col">
@@ -61,15 +56,13 @@ const ServiceProviderCard = ({
                   {serviceProvider.name}
                   <span className="flex items-center gap-1">
                     <Star className="h-4 w-4 fill-primary text-primary" />
-                    <span className="text-sm font-medium">
-                      {serviceProvider.rating}
-                    </span>
+                    <span className="text-sm font-medium">{serviceProvider.rating}</span>
                     <span className="text-sm text-muted-foreground">
                       ({serviceProvider.reviewCount} reviews)
                     </span>
                   </span>
                 </span>
-                <span className="text-xs text-gray-500 font-normal line-clamp-1 inline">
+                <span className="text-xs text-gray-500 font-normal line-clamp-2 inline ">
                   {serviceProvider.description}
                 </span>
               </div>
@@ -93,9 +86,11 @@ const ServiceProviderCard = ({
           <Button variant="secondary" size="sm" className="flex-1">
             Message
           </Button>
-          <Button size="sm" className="flex-1">
+          {/* <Link href={`/service-provider/${serviceProvider.userId}`}> */}
+          <Button size="sm" className="flex-1" onClick={handleHireNow}>
             Hire Now
           </Button>
+          {/* </Link> */}
         </CardFooter>
       )}
     </Card>

@@ -73,3 +73,91 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Failed to create service provider" }, { status: 500 });
   }
 }
+
+export async function GET(request: Request) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const page = parseInt(searchParams.get("page") || "1");
+    const limit = parseInt(searchParams.get("limit") || "9");
+    const sortBy = searchParams.get("sortBy") || "rating";
+    const category = searchParams.get("category");
+    const search = searchParams.get("search");
+
+    await dbConnect();
+
+    // Build query
+    const query: any = {};
+    if (category) {
+      query.serviceType = category;
+    }
+    if (search) {
+      query.$or = [
+        { name: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    // Build sort options
+    let sortOptions: any = {};
+    switch (sortBy) {
+      case "price":
+        sortOptions.hourlyRate = 1;
+        break;
+      case "rate":
+        sortOptions.rating = -1;
+        break;
+      case "alphabet":
+        sortOptions.name = 1;
+        break;
+      default:
+        sortOptions.rating = -1;
+    }
+
+    // Calculate pagination
+    const skip = (page - 1) * limit;
+
+    // Fetch service providers with pagination
+    const [serviceProviders, total] = await Promise.all([
+      ServiceProvider.find(query)
+        .sort(sortOptions)
+        .skip(skip)
+        .limit(limit)
+        .populate("user", "name email image"),
+      ServiceProvider.countDocuments(query),
+    ]);
+
+    // Transform the data to match the frontend expectations
+    const transformedProviders = serviceProviders.map((provider) => ({
+      id: provider._id.toString(),
+      userId: provider.user._id.toString(),
+      name: provider.name,
+      profileImage: provider.profileImage || provider.user.image,
+      coverImage: provider.coverImage,
+      location: provider.location,
+      rating: provider.rating,
+      reviewCount: provider.reviewCount,
+      hourlyRate: provider.hourlyRate,
+      description: provider.description,
+      serviceType: provider.serviceType,
+      portfolioImages: provider.portfolioImages,
+      about: provider.about,
+      services: provider.services.map((service: any) => ({
+        id: service._id.toString(),
+        name: service.name,
+        description: service.description,
+        price: service.price,
+        duration: service.duration,
+      })),
+    }));
+
+    return NextResponse.json({
+      serviceProviders: transformedProviders,
+      total,
+      currentPage: page,
+      totalPages: Math.ceil(total / limit),
+    });
+  } catch (error) {
+    console.error("Error fetching service providers:", error);
+    return NextResponse.json({ error: "Failed to fetch service providers" }, { status: 500 });
+  }
+}
