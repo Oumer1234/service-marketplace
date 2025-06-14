@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { NextResponse } from "next/server";
 import { ObjectId } from "mongodb";
 import { writeFile } from "fs/promises";
@@ -98,7 +100,7 @@ export async function GET(request: Request) {
     }
 
     // Build sort options
-    let sortOptions: any = {};
+    const sortOptions: any = {};
     switch (sortBy) {
       case "price":
         sortOptions.hourlyRate = 1;
