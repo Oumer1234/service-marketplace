@@ -29,9 +29,9 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
   const { data: session, isPending } = useSession();
-  const [user, setUser] = useState<typeof User | null>(null);
+  const [user, setUser] = useState();
 
-  console.log("session : ", session);
+  // console.log("session : ", session);
 
   // useEffect(() => {
   //   if (session) setUser(session?.user);
@@ -57,23 +57,23 @@ export default function Navbar() {
     { href: "/marketplace", label: "Marketplace" },
   ];
 
-  // const authNavigationItems = user
-  //   ? [
-  //       { name: "Profile", href: "/profile", icon: <User className="h-5 w-5" /> },
-  //       ...(session?.user.isServiceProvider
-  //         ? [
-  //             {
-  //               name: "My Services",
-  //               href: `/service-provider/${session?.user.serviceProviderId}`,
-  //               icon: <Grid3X3 className="h-5 w-5" />,
-  //               label: "My Services",
-  //             },
-  //           ]
-  //         : []),
-  //     ]
-  //   : [];
+  const authNavigationItems = session?.user
+    ? [
+        { name: "Profile", href: "/profile", icon: <User className="h-5 w-5" /> },
+        ...(session?.user.isServiceProvider
+          ? [
+              {
+                name: "My Services",
+                href: `/service-provider/${session?.user.id}`,
+                icon: <Grid3X3 className="h-5 w-5" />,
+                label: "My Services",
+              },
+            ]
+          : []),
+      ]
+    : [];
 
-  // const allNavigationItems = [...navLinks, ...authNavigationItems];
+  const allNavigationItems = [...navLinks, ...authNavigationItems];
 
   return (
     <motion.nav
@@ -91,7 +91,7 @@ export default function Navbar() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex space-x-6">
-            {navLinks.map((link) => (
+            {allNavigationItems.map((link) => (
               <Link key={link.href} href={link.href} className="hover:text-sky-300 transition">
                 {link.label}
               </Link>

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { MapPin, Mail, Clock, ChevronLeft } from "lucide-react";
+import { MapPin, Mail, Clock, ChevronLeft, Pen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Separator } from "@/components/ui/separator";
@@ -10,6 +10,7 @@ import PortfolioGallery from "@/components/service-provider/PortfolioGallery";
 import ReviewList from "@/components/service-provider/ReviewList";
 import ServicesOffered from "@/components/service-provider/ServicesOffered";
 import { ServiceProvider, Review } from "@/types";
+import getUserSession from "@/hooks/use-get-user-session";
 
 interface ServiceProviderDetailPageProps {
   params: {
@@ -33,6 +34,9 @@ export default async function ServiceProviderDetailPage({
   params,
 }: ServiceProviderDetailPageProps) {
   const { id } = await params;
+  const session = await getUserSession();
+
+  console.log("Server Session : ", session);
 
   let serviceProvider;
   try {
@@ -96,13 +100,24 @@ export default async function ServiceProviderDetailPage({
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-2">
-                  <Link href={`/messages?provider=${serviceProvider.id}`}>
-                    <Button variant="outline" className="w-full sm:w-auto">
-                      <Mail className="mr-2 h-4 w-4" />
-                      Message
-                    </Button>
-                  </Link>
-                  <Button className="w-full sm:w-auto">Hire Now</Button>
+                  {session?.user?.id === id ? (
+                    <Link href={`/service-provider/${id}/edit`}>
+                      <Button className="w-full sm:w-auto" variant="outline">
+                        <Pen className="mr-2 h-4 w-4" />
+                        Edit
+                      </Button>
+                    </Link>
+                  ) : (
+                    <>
+                      <Link href={`/messages?provider=${serviceProvider.id}`}>
+                        <Button variant="outline" className="w-full sm:w-auto">
+                          <Mail className="mr-2 h-4 w-4" />
+                          Message
+                        </Button>
+                      </Link>
+                      <Button className="w-full sm:w-auto">Hire Now</Button>
+                    </>
+                  )}
                 </div>
               </div>
 
