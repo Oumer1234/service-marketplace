@@ -66,7 +66,7 @@ export default function EditServiceProviderPage({ params }: { params: { id: stri
   const [coverImagePreview, setCoverImagePreview] = useState<string>("");
   const [portfolioImages, setPortfolioImages] = useState<File[]>([]);
   const [portfolioPreviews, setPortfolioPreviews] = useState<string[]>([]);
-  const [existingData, setExistingData] = useState<any>(null);
+  const [existingData, setExistingData] = useState(null);
 
   const form = useForm<ServiceProviderFormData>({
     resolver: zodResolver(serviceProviderSchema),
@@ -297,11 +297,11 @@ export default function EditServiceProviderPage({ params }: { params: { id: stri
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            {categories.map((category) => (
+                            {/* {categories.map((category) => (
                               <SelectItem key={category.value} value={category.value}>
                                 {category.label}
                               </SelectItem>
-                            ))}
+                            ))} */}
                           </SelectContent>
                         </Select>
                         <FormMessage />

@@ -130,10 +130,10 @@ export async function GET(request: Request) {
 
     // Transform the data to match the frontend expectations
     const transformedProviders = serviceProviders.map((provider) => ({
-      id: provider._id.toString(),
-      userId: provider.user._id.toString(),
+      id: provider.id.toString(),
+      userId: provider.userId.toString(),
       name: provider.name,
-      profileImage: provider.profileImage || provider.user.image,
+      profileImage: provider.profileImage || provider.profileImage,
       coverImage: provider.coverImage,
       location: provider.location,
       rating: provider.rating,
