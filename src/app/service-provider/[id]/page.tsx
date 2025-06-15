@@ -140,7 +140,7 @@ export default async function ServiceProviderDetailPage({
 
           {/* Main Content */}
           <div className="mt-6">
-            <h2 className="text-xl font-semibold mb-4">Services</h2>
+            {/* <h2 className="text-xl font-semibold mb-4">Services</h2> */}
             <ServicesOffered services={serviceProvider.services} title="Available Services" />
 
             <Separator className="my-8" />

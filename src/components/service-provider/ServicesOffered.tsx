@@ -51,12 +51,12 @@ const ServicesOffered = ({ services, title = "Services Offered" }: ServicesOffer
           <Card key={index} className="min-w-[300px] max-w-[350px] flex-shrink-0 snap-start">
             <CardContent className="p-4">
               <h4 className="font-semibold text-lg">{service.name}</h4>
-              <p className="mt-2 text-sm text-muted-foreground line-clamp-3">
+              <p className="mt-2 text-sm text-muted-foreground line-clamp-1">
                 {service.description}
               </p>
               <div className="mt-4 flex justify-between">
                 <div className="flex items-center gap-1">
-                  <DollarSign className="h-4 w-4 text-primary" />
+                  {/* <DollarSign className="h-4 w-4 text-primary" /> */}
                   <span className="font-semibold">${service.price.toFixed(2)}</span>
                 </div>
                 <div className="flex items-center gap-1 text-muted-foreground">
