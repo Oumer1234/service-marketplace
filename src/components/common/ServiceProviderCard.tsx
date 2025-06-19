@@ -19,6 +19,7 @@ const ServiceProviderCard = ({ serviceProvider, compact = false }: ServiceProvid
   const router = useRouter();
 
   const handleHireNow = () => {
+    // console.log("ID : ", serviceProvider.userId);
     router.push(`/service-provider/${serviceProvider.userId}`);
   };
 

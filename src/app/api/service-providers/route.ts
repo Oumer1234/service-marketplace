@@ -128,10 +128,17 @@ export async function GET(request: Request) {
       ServiceProvider.countDocuments(query),
     ]);
 
+    function getUserId(user: any): string {
+      if (user && typeof user === "object" && "_id" in user) {
+        return String(user._id);
+      }
+      return String(user);
+    }
+
     // Transform the data to match the frontend expectations
     const transformedProviders = serviceProviders.map((provider) => ({
       id: provider.id.toString(),
-      userId: provider.userId.toString(),
+      userId: getUserId(provider.user),
       name: provider.name,
       profileImage: provider.profileImage || provider.profileImage,
       coverImage: provider.coverImage,

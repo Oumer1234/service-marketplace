@@ -8,6 +8,14 @@ import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { ServiceProvider } from "@/types";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type sortByType = "Popularity" | "Price" | "Rate" | "Alphabet";
 type viewType = "grid" | "list";
@@ -135,21 +143,21 @@ export default function MarketplaceContent() {
             </div>
             <div className="flex items-center gap-3">
               <div className="flex items-center gap-3">
-                <p className="font-semibold">Sort by : </p>
-                <ul className="flex items-center gap-3">
-                  {["Popularity", "Price", "Rate", "Alphabet"].map((sort) => (
-                    <li
-                      key={sort}
-                      className={`py-2 px-2 cursor-pointer hover:bg-muted-foreground/20 rounded-md ${
-                        sortBy === sort ? "font-bold bg-muted-foreground/20" : ""
-                      }`}
-                      onClick={() => handleSortChange(sort as sortByType)}
-                    >
-                      {sort}
-                    </li>
-                  ))}
-                </ul>
+                <p className="font-semibold">Sort by:</p>
+                <Select value={sortBy} onValueChange={(val) => handleSortChange(val as sortByType)}>
+                  <SelectTrigger className="w-[150px]">
+                    <SelectValue placeholder="Select sort" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {["Popularity", "Price", "Rate", "Alphabet"].map((sort) => (
+                      <SelectItem key={sort} value={sort}>
+                        {sort}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
+
               <div className="flex items-center gap-3 border rounded-md p-1 mt-4 sm:mt-0">
                 <Button
                   variant={viewType === "grid" ? "default" : "outline"}

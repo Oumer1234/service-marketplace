@@ -23,10 +23,18 @@ export async function GET(request: Request, { params }: { params: { id: string }
     console.log("service provider id : ", id);
 
     // Find the service provider
-    const serviceProvider = await ServiceProvider.findOne({ user: id }).populate({
+    let serviceProvider = await ServiceProvider.findOne({ user: id }).populate({
       path: "user",
       select: "name email image",
     });
+
+    if (!serviceProvider) {
+      serviceProvider = await ServiceProvider.findById(id).populate({
+        path: "user",
+        select: "name email image",
+      });
+      // return NextResponse.json({ error: "Service provider not found" }, { status: 404 });
+    }
 
     if (!serviceProvider) {
       return NextResponse.json({ error: "Service provider not found" }, { status: 404 });

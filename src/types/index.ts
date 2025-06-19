@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export interface ServiceProvider {
   id: string;
   userId: string;
@@ -14,6 +15,7 @@ export interface ServiceProvider {
   portfolioImages: string[];
   about: string;
   services: Service[];
+  reviews?: Review[];
 }
 
 export interface Service {
@@ -129,4 +131,27 @@ export interface ServiceProviderFormData {
   serviceType: string;
   hourlyRate: number;
   about: string;
+}
+
+export interface Booking {
+  providerId: string;
+  seekerId: string;
+  date: string;
+  time: string;
+  details: string;
+  budget?: number;
+  location: string;
+  locationDetails?: string;
+  status: "pending" | "accepted" | "rejected";
+  createdAt: string;
+  updatedAt: string;
+  notes?: string;
+  attachments?: string[];
+  additionalServices?: string[];
+  seekerInfo?: {
+    name?: string;
+    email?: string;
+    phone?: string;
+    [key: string]: any;
+  };
 }

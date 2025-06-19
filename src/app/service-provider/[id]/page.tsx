@@ -115,7 +115,9 @@ export default async function ServiceProviderDetailPage({
                           Message
                         </Button>
                       </Link>
-                      <Button className="w-full sm:w-auto">Hire Now</Button>
+                      <Link href={`/hire/${serviceProvider.id}`}>
+                        <Button className="w-full sm:w-auto">Hire Now</Button>
+                      </Link>
                     </>
                   )}
                 </div>
