@@ -21,6 +21,20 @@ interface BookingBody {
   };
 }
 
+interface FormDataBody {
+  providerId: string;
+  seekerId: string;
+  date: string;
+  time: string;
+  details: string;
+  budget?: number;
+  location: string;
+  locationDetails?: string;
+  service: string;
+  additionalServices: string[];
+  seekerInfo?: BookingBody["seekerInfo"];
+}
+
 export async function POST(req: NextRequest) {
   const session = await getUserSession();
 
@@ -30,47 +44,61 @@ export async function POST(req: NextRequest) {
 
   await dbConnect();
   try {
-    // Check if it's a multipart form for file uploads
     const contentType = req.headers.get("content-type") || "";
-    let body: Record<string, unknown> = {};
     const attachments: string[] = [];
+    let bookingData: Partial<FormDataBody> = {};
+
     if (contentType.includes("multipart/form-data")) {
       const formData = await req.formData();
-      body = JSON.parse(formData.get("data") as string);
       const files = formData.getAll("attachments") as File[];
       for (const file of files) {
-        // Save file logic here (e.g., to /uploads/booking-attachments)
-        // For now, just push file.name as a placeholder
         attachments.push(file.name);
       }
+
+      bookingData = {
+        providerId: formData.get("providerId") as string,
+        seekerId: session.user.id,
+        date: formData.get("date") as string,
+        time: formData.get("time") as string,
+        details: formData.get("details") as string,
+        budget: formData.get("budget") ? Number(formData.get("budget")) : undefined,
+        location: formData.get("location") as string,
+        locationDetails: formData.get("locationDetails") as string | undefined,
+        service: formData.get("service") as string,
+        additionalServices: formData.getAll("additionalServices") as string[],
+        seekerInfo: formData.get("seekerInfo")
+          ? JSON.parse(formData.get("seekerInfo") as string)
+          : undefined,
+      };
     } else {
-      body = await req.json();
+      const body = await req.json();
+      bookingData = { ...body, seekerId: session.user.id };
     }
-    // Instead of destructuring with 'as BookingBody', map fields explicitly
-    const providerId = typeof body.providerId === "string" ? body.providerId : "";
-    const seekerId = typeof body.seekerId === "string" ? body.seekerId : undefined;
-    const date = typeof body.date === "string" ? body.date : "";
-    const time = typeof body.time === "string" ? body.time : "";
-    const details = typeof body.details === "string" ? body.details : "";
-    const budget = typeof body.budget === "number" ? body.budget : undefined;
-    const location = typeof body.location === "string" ? body.location : "";
-    const locationDetails =
-      typeof body.locationDetails === "string" ? body.locationDetails : undefined;
-    const additionalServices = Array.isArray(body.additionalServices)
-      ? (body.additionalServices as string[])
-      : undefined;
-    const seekerInfo =
-      typeof body.seekerInfo === "object"
-        ? (body.seekerInfo as BookingBody["seekerInfo"])
-        : undefined;
+
+    const {
+      providerId,
+      seekerId,
+      date,
+      time,
+      details,
+      budget,
+      location,
+      locationDetails,
+      service,
+      additionalServices,
+      seekerInfo,
+    } = bookingData;
+
     if (!providerId || !date || !time || !details || !location) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
+
     const booking = await Booking.create({
       providerId,
-      seekerId: seekerId || "000000000000000000000000",
+      seekerId,
       date,
       time,
+      service,
       details,
       budget,
       location,
