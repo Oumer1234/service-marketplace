@@ -25,6 +25,7 @@ import { format } from "date-fns";
 import { TimePickerInput } from "@/components/ui/time-picker";
 import { useDropzone } from "react-dropzone";
 import { Badge } from "@/components/ui/badge";
+import { useSession } from "@/hooks/use-session";
 
 function FAQItem({ question, answer }: { question: string; answer: string }) {
   const [open, setOpen] = React.useState(false);
@@ -59,6 +60,7 @@ export default function HirePageClient({
   provider: ServiceProvider | null;
   providerId: string;
 }) {
+  const { data: session } = useSession();
   const [form, setForm] = useState({
     date: "",
     time: "",
@@ -124,7 +126,7 @@ export default function HirePageClient({
         toast.success("Booking requested!", {
           description: `Request sent to ${provider?.name}`,
         });
-        setTimeout(() => router.push("/"), 1800);
+        setTimeout(() => router.push("/dashboard"), 1200);
       } else {
         toast.error("Error", {
           description: data.error || "Failed to book",

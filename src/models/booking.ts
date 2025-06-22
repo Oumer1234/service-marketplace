@@ -6,6 +6,7 @@ export interface IBooking extends Document {
   seekerId: mongoose.Types.ObjectId;
   date: Date;
   time: string;
+  service: string;
   details: string;
   budget?: number;
   location: string;
@@ -30,6 +31,7 @@ const BookingSchema: Schema<IBooking> = new Schema(
     seekerId: { type: Schema.Types.ObjectId, ref: "User", required: true },
     date: { type: Date, required: true },
     time: { type: String, required: true },
+    service: { type: String, required: true },
     details: { type: String, required: true },
     budget: { type: Number },
     location: { type: String, required: true },

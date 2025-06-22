@@ -68,6 +68,15 @@ export function SignOut() {
 
         <DropdownMenuItem
           onClick={() => {
+            router.push("/dashboard");
+          }}
+          className="h-10 cursor-pointer rounded-xl hover:bg-black/70"
+        >
+          <UserIcon className="mr-2 h-4 w-4" />
+          <span>Dashboard</span>
+        </DropdownMenuItem>
+        <DropdownMenuItem
+          onClick={() => {
             router.push("/profile");
           }}
           className="h-10 cursor-pointer rounded-xl hover:bg-black/70"

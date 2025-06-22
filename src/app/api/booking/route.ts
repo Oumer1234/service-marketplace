@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
 
       bookingData = {
         providerId: formData.get("providerId") as string,
-        seekerId: session.user.id,
+        seekerId: session.session.userId,
         date: formData.get("date") as string,
         time: formData.get("time") as string,
         details: formData.get("details") as string,
@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
       };
     } else {
       const body = await req.json();
-      bookingData = { ...body, seekerId: session.user.id };
+      bookingData = { ...body, seekerId: session.session.userId };
     }
 
     const {
