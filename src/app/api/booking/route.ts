@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import Booking from "@/models/booking";
 import dbConnect from "@/lib/db";
 import getUserSession from "@/hooks/use-get-user-session";
+import { writeFile } from "fs/promises";
+import { join } from "path";
 
 interface BookingBody {
   providerId: string;
@@ -51,8 +53,33 @@ export async function POST(req: NextRequest) {
     if (contentType.includes("multipart/form-data")) {
       const formData = await req.formData();
       const files = formData.getAll("attachments") as File[];
+
+      // Handle file uploads
       for (const file of files) {
-        attachments.push(file.name);
+        if (file && file.size > 0) {
+          // Validate file size (max 10MB)
+          if (file.size > 10 * 1024 * 1024) {
+            return NextResponse.json(
+              { error: "File size must be less than 10MB" },
+              { status: 400 }
+            );
+          }
+
+          const bytes = await file.arrayBuffer();
+          const buffer = Buffer.from(bytes);
+
+          // Create unique filename
+          const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+          const filename = `${uniqueSuffix}-${file.name}`;
+          const uploadDir = join(process.cwd(), "public", "uploads", "booking-attachments");
+
+          // Ensure upload directory exists
+          await writeFile(join(uploadDir, filename), buffer);
+
+          // Store the file URL
+          const fileUrl = `/uploads/booking-attachments/${filename}`;
+          attachments.push(fileUrl);
+        }
       }
 
       bookingData = {

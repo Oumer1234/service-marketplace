@@ -35,7 +35,7 @@ const userSchema = new Schema(
       enum: ["user", "admin", "service_provider"] as UserRole[],
       default: "user",
     },
-    isServiceProvider: {
+    isTeacher: {
       type: Boolean,
       default: false,
     },

@@ -5,6 +5,7 @@ async function createUploadDirectories() {
   const uploadDirs = [
     join(process.cwd(), "public", "uploads"),
     join(process.cwd(), "public", "uploads", "profile-images"),
+    join(process.cwd(), "public", "uploads", "booking-attachments"),
   ];
 
   for (const dir of uploadDirs) {

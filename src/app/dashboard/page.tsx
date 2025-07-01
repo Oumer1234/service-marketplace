@@ -11,7 +11,7 @@ export default function DashboardPage() {
 
   if (isPending) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center bg-background">
         <Loader2 className="h-8 w-8 animate-spin text-primary" />
       </div>
     );
@@ -19,8 +19,8 @@ export default function DashboardPage() {
 
   if (!session?.user) {
     return (
-      <div className="flex min-h-screen items-center justify-center">
-        <p>You must be logged in to view this page.</p>
+      <div className="flex min-h-screen items-center justify-center bg-background">
+        <p className="text-foreground">You must be logged in to view this page.</p>
       </div>
     );
   }
@@ -28,7 +28,7 @@ export default function DashboardPage() {
   const { user } = session;
   console.log(user.role, "ROLE");
   return (
-    <div className="mt-20">
+    <div className="mt-20 bg-background min-h-screen">
       {user.role === "service_provider" && <ServiceProviderDashboard />}
       {user.role === "user" && <UserDashboard />}
       {user.role === "admin" && <AdminDashboard />}

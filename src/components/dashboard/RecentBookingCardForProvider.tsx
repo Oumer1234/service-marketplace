@@ -29,6 +29,7 @@ import { IBooking } from "@/models/booking";
 import { format } from "date-fns";
 import { Separator } from "../ui/separator";
 import { User as UserType } from "@/types";
+import Link from "next/link";
 
 interface RecentBookingCardForProviderProps {
   booking: IBooking & { seekerId: UserType };
@@ -106,24 +107,10 @@ const RecentBookingCardForProvider = ({ booking }: RecentBookingCardForProviderP
           <FileText className="h-4 w-4 mt-1 flex-shrink-0" />
           <p className="line-clamp-2">{booking.details}</p>
         </div>
-
-        {booking.additionalServices && booking.additionalServices.length > 0 && (
-          <div className="flex items-center gap-2 flex-wrap">
-            <p className="text-sm font-medium w-full">Additional Services:</p>
-            {booking.additionalServices.map((service, index) => (
-              <Badge key={index} variant="outline">
-                {service}
-              </Badge>
-            ))}
-          </div>
-        )}
       </CardContent>
       <CardFooter className="flex gap-2 p-4 pt-0">
-        <Button variant="outline" size="sm" className="flex-1">
-          Accept
-        </Button>
-        <Button variant="destructive" size="sm" className="flex-1">
-          Decline
+        <Button asChild size="sm" className="flex-1">
+          <Link href={`/dashboard/bookings/${booking._id}`}>View Details</Link>
         </Button>
       </CardFooter>
     </Card>

@@ -21,7 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       {/* <body className={`${inter.className} ${poppins.className} antialiased font-poppins`}> */}
-      <body className={`antialiased font-poppins`}>
+      <body className={`antialiased font-outfit`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

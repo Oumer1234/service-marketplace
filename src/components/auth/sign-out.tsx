@@ -15,6 +15,7 @@ import { Settings } from "lucide-react";
 import { UserIcon } from "lucide-react";
 import { authClient } from "@/lib/auth/auth-client";
 import { useSession } from "@/hooks/use-session";
+import { IconDashboard } from "@tabler/icons-react";
 
 export function SignOut() {
   const router = useRouter();
@@ -72,7 +73,7 @@ export function SignOut() {
           }}
           className="h-10 cursor-pointer rounded-xl hover:bg-black/70"
         >
-          <UserIcon className="mr-2 h-4 w-4" />
+          <IconDashboard className="mr-2 h-4 w-4" />
           <span>Dashboard</span>
         </DropdownMenuItem>
         <DropdownMenuItem

@@ -85,8 +85,12 @@ export default function HirePageClient({
   });
 
   React.useEffect(() => {
-    setUserInfo({ name: "John Doe", email: "john@example.com", phone: "" });
-  }, []);
+    return setUserInfo({
+      name: session?.user?.name || "",
+      email: session?.user?.email || "",
+      phone: "",
+    });
+  }, [session?.user?.email, session?.user?.name]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
